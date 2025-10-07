@@ -1,0 +1,242 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>BIG</groupId>
+  <artifactId>Testing</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>BIG Testing Framework</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+    <maven.compiler.version>3.6.0</maven.compiler.version>
+    <junit.version>3.8.1</junit.version>
+    <testng.version>7.7.1</testng.version>
+    <cucumberjava.version>7.8.1</cucumberjava.version>
+    <cucumberjunit.version>7.8.1</cucumberjunit.version>
+    <cucumbercore.version>7.8.1</cucumbercore.version>
+    <gherkin.version>24.1.0</gherkin.version>
+    <seleniumjava.version>4.8.3</seleniumjava.version>
+    <seleniumremotedriver.version>4.8.3</seleniumremotedriver.version>
+    <seleniumserver.version>3.141.59</seleniumserver.version>
+    <webdrivermanager.version>5.4.1</webdrivermanager.version>
+    <extentReportCucumber7.version>1.7.0</extentReportCucumber7.version>
+    <extentReportCucumber6.version>2.13.0</extentReportCucumber6.version>
+    <extentTestng.version>1.2.2</extentTestng.version>
+    <cucumbertestng.version>7.8.1</cucumbertestng.version>
+    <restassured.version>5.2.0</restassured.version>
+    <postgresql.version>42.5.0</postgresql.version>
+    <ojdbc10.version>19.16.0.0</ojdbc10.version>
+    <mysqljdbc.version>11.2.1.jre18</mysqljdbc.version>
+    <mysqlconnectorjava.version>8.0.31</mysqlconnectorjava.version>
+    <poiooxml.version>5.2.3</poiooxml.version>
+    <log4j.version>2.19.0</log4j.version>
+    <karatecore.version>1.4.0</karatecore.version>
+    <karatejunit.version>1.4.0</karatejunit.version>
+    <junitJupiter>5.9.3</junitJupiter>
+    <extentReport.version>5.0.9</extentReport.version>
+    <junitPlatformLauncher.version>1.9.3</junitPlatformLauncher.version>
+  </properties>
+
+  <dependencies>
+  			
+<dependency>
+    <groupId>com.sun.mail</groupId>
+    <artifactId>javax.mail</artifactId>
+    <version>1.6.2</version>
+</dependency>
+
+  <dependency>
+	    <groupId>io.github.bonigarcia</groupId>
+	    <artifactId>webdrivermanager</artifactId>
+	    <version>${webdrivermanager.version}</version>
+	</dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+			<!-- <scope>test</scope> -->
+    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+	<dependency>
+	    <groupId>org.testng</groupId>
+	    <artifactId>testng</artifactId>
+	    <version>${testng.version}</version>
+			<!-- <scope>test</scope>-->
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+	<dependency>
+	    <groupId>io.cucumber</groupId>
+	    <artifactId>cucumber-java</artifactId>
+	    <version>${cucumberjava.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
+	<dependency>
+	    <groupId>io.cucumber</groupId>
+	    <artifactId>cucumber-junit</artifactId>
+	    <version>${cucumberjunit.version}</version>
+			<!-- <scope>test</scope> -->
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
+	<dependency>
+	    <groupId>io.cucumber</groupId>
+	    <artifactId>cucumber-core</artifactId>
+	    <version>${cucumbercore.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/io.cucumber/gherkin -->
+	<dependency>
+	    <groupId>io.cucumber</groupId>
+	    <artifactId>gherkin</artifactId>
+	    <version>${gherkin.version}</version>
+	</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-java</artifactId>
+	    <version>${seleniumjava.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-server</artifactId>
+	    <version>${seleniumserver.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+<dependency>
+	    <groupId>io.github.bonigarcia</groupId>
+	    <artifactId>webdrivermanager</artifactId>
+	    <version>${webdrivermanager.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver -->
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-remote-driver</artifactId>
+	    <version>${seleniumremotedriver.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/tech.grasshopper/extentreports-cucumber7-adapter -->
+	<dependency>
+	    <groupId>tech.grasshopper</groupId>
+	    <artifactId>extentreports-cucumber7-adapter</artifactId>
+	    <version>${extentReportCucumber7.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>io.cucumber</groupId>
+	    <artifactId>cucumber-testng</artifactId>
+	    <version>${cucumbertestng.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports-testng-adapter -->
+	<dependency>
+	    <groupId>com.aventstack</groupId>
+	    <artifactId>extentreports-testng-adapter</artifactId>
+	    <version>${extentTestng.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+	<dependency>
+	    <groupId>com.aventstack</groupId>
+	    <artifactId>extentreports</artifactId>
+	    <version>${extentReport.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+	<dependency>
+	    <groupId>io.rest-assured</groupId>
+	    <artifactId>rest-assured</artifactId>
+	    <version>${restassured.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+	<dependency>
+	    <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>${postgresql.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc10 -->
+	<dependency>
+	    <groupId>com.oracle.database.jdbc</groupId>
+	    <artifactId>ojdbc10</artifactId>
+	    <version>${ojdbc10.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+	<dependency>
+	    <groupId>com.microsoft.sqlserver</groupId>
+	    <artifactId>mssql-jdbc</artifactId>
+	    <version>${mysqljdbc.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>${mysqlconnectorjava.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-ooxml</artifactId>
+	    <version>${poiooxml.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-core</artifactId>
+	    <version>${log4j.version}</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.intuit.karate/karate-core -->
+		<dependency>
+		    <groupId>com.intuit.karate</groupId>
+		    <artifactId>karate-core</artifactId>
+		    <version>${karatecore.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+	<dependency>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter-api</artifactId>
+	    <version>${junitJupiter}</version>
+	    <scope>test</scope>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
+	<dependency>
+	    <groupId>org.junit.platform</groupId>
+	    <artifactId>junit-platform-launcher</artifactId>
+	    <version>${junitPlatformLauncher.version}</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+		    <groupId>com.intuit.karate</groupId>
+		    <artifactId>karate-junit5</artifactId>
+		    <version>${karatejunit.version}</version>
+		</dependency>	
+  </dependencies>
+	  <dependencyManagement>
+	  <dependencies>
+	    <dependency>
+	      <groupId>com.google.guava</groupId>
+	      <artifactId>guava</artifactId>
+	      <version>31.0.1-jre</version>
+	    </dependency>
+	  </dependencies>
+	</dependencyManagement>
+	<build>
+        <testResources>
+            <testResource>
+                <directory>src/test/java</directory>
+            </testResource>
+        </testResources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+					<!-- <compilerArgument>-Werror</compilerArgument> -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

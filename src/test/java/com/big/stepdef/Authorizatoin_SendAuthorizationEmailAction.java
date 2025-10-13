@@ -5,6 +5,7 @@ import com.big.pageObjects.CommonObj;
 import com.big.pageObjects.ContractCasePagePreparation_Actions;
 import com.big.pageObjects.HomePage_Actions;
 import com.big.pageObjects.QPRLogin_Actions;
+import com.big.testNGscripts.TestNGInitiation;
 import com.big.utils.TestReusables;
 import com.big.utils.Utilities;
 import io.cucumber.java.en.*;
@@ -15,17 +16,12 @@ import io.cucumber.java.en.*;
 		CommonObj co = new CommonObj();
 		QPRLogin_Actions qprActionObj = new QPRLogin_Actions();
 		HomePage_Actions homeActionObj = new HomePage_Actions();
-		ContractCasePagePreparation_Actions contractcasePreparationObj = new ContractCasePagePreparation_Actions();
 		Authorization_SendAuthorizationEmailPage at = new Authorization_SendAuthorizationEmailPage();
 		TestReusables tr = new TestReusables();
-		String testCaseID = "TC_004" ;
 		
-		@Then("User click on the Send Auth Email action")
-		public void clickSendAuth(){
-			at.sendauth();
-		}
 			
-		@And("User verify Authorization Email text")
+			
+		@And("User verify Heading as Authorization Email text")
 		public void AuthEmailTextCompare(){
 			at.verifyAuthEmailTitle();
 		}
@@ -35,53 +31,50 @@ import io.cucumber.java.en.*;
 			at.clickRecipientDropdown();	
 		}
 		
-		@And("User select the recipient {string} from the drop down")
-		public void selectRecipientFromList(String recipientemail) { 
-		String recipientemailvalue = ut.getCellValue("TestData_QPR", testCaseID, recipientemail);
-		at.selectRecipient(recipientemailvalue);  
+		@And("User select the Recipient email from dropdown as Recipient TO")
+		public void selectRecipientFromList() { 
+		at.selectRecipient();  
 		}
 		 
 		
-		@Then("User check the Acknowledge checkbox button")
+		@Then("User check the Acknowledge checkbox")
 		public void authAckCheckBox() {
 			at.authacknowledgeCheckBox();
 		}
 		
 		@And("User enter Wording Proposal text from {string}")
-		public void wordingProposal(String wordingText) {
-			String wordingtext = ut.getCellValue("TestData_QPR", testCaseID, wordingText);
+		public void wordingProposal(String testCaseID) {
+			String wordingtext = ut.getCellValue("TestData_QPR", testCaseID, "Wording_Text");
 			at.wordingProposalText(wordingtext);
 		}
 		
-		@And("User check and click on Send Authorization Email button")
-		public void checkAndClickSendAuthEmailButton() {
-			at.visiblityAndClicksendAuthEmailButton();
+		@And("User check visibility of Send Authorization Email button")
+		public void checkvisibility() {
+			at.checkVisiblity();
 		}
 		
-		@Then("User navigate to authorization Results section {string}")
-		public void navigatestoauthorizationresultsection(String resultsection)throws Exception {
-			String sectionname = ut.getCellValue("TestData_QPR", testCaseID, resultsection);
-			at.navigatesToAuthorizationSection(sectionname);
+		@And("User click on Send Authorization Email button")
+		public void ClickSendAuthEmailButton() {
+			at.clickSendAuthorizationButton();
 		}
 		
-		@And("User validate the authorization email in sections")
+		@Then("User navigate to authorization Results section")
+		public void navigatestoauthorizationresultsection()throws Exception {
+			at.navigatesToAuthorizationSection();
+		}
+		
+		@And("User validate the authorization email in section")
 		public void validateauthorizationemail() throws Exception {
 			at.validateAuthorizationEmail();
 		}
 		
-		@Then("User navigate to communication tab using {string}")
-		public void navigateCommunicationTab(String casetab) {
-			String casetabname = ut.getCellValue("TestData_QPR", testCaseID, casetab);
-			at.clickOnCummination(casetabname);
-		}
 		
-		@And("User validate authorization email is sent {string}")
-		public void validateAuthEmailSend(String authemail) {
-			String expEmailtype = ut.getCellValue("TestData_QPR", testCaseID, authemail);
-			at.validateEmailSendInCommunication(expEmailtype);
+		@And("User validate authorization email is being sent")
+		public void validateAuthEmailSend() {
+			
+			at.validateEmailSendInCommunication();
 		}
-		
 		
 	}
 
-		
+	

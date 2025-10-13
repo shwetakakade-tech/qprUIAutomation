@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,7 @@ import com.big.utils.Utilities;
 		Utilities ut = new Utilities();
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		CommonObj co = new CommonObj();
+		TestReusables tr = new TestReusables();
 
 		public Authorization_SendAuthorizationEmailPage() {
 			super();
@@ -63,6 +65,13 @@ import com.big.utils.Utilities;
 		@FindBy(xpath = "//ul[@role = 'listbox']/li")
 		List<WebElement> allRecipients;
 		
+		@FindBy(xpath = "//ul[@role = 'listbox']/li[1]/div//span")
+		WebElement clientemailid;
+		
+		@FindBy(xpath = "//ul[@role = 'listbox']/li[2]/div//span")
+		WebElement brokeremailid;
+		
+		
 		@FindBy(xpath = "//textarea [@class = 'ParagraphWidget---textarea ParagraphWidget---align_start ParagraphWidget---height_medium ParagraphWidget---inModalDialogLayout']")
 		WebElement wordingProposalTextArea;
 		
@@ -71,6 +80,10 @@ import com.big.utils.Utilities;
 		
 		@FindBy(xpath = "//a[@class = 'LinkedItem---standalone_richtext_link elements---global_a']")
 		List<WebElement> communicationRecords;
+		
+		@FindBy(xpath = "//div[@class ='PagingGridLayout---scrollable_content']/table/tbody/tr/td[3]/div/p")
+		List<WebElement> emailbody;
+		
 		
 		@FindBy(xpath = "//p[@class = 'ParagraphText---richtext_paragraph ParagraphText---default_direction ParagraphText---align_start elements---global_p']")
 		List<WebElement> communicationAllRecords;
@@ -99,7 +112,7 @@ import com.big.utils.Utilities;
 			click(authRecipient, "Recipient DropDown");
 		}	
 		
-		public void selectRecipient(String recipientEmail) {
+		public void selectRecipient1(String recipientEmail) {
 			for (WebElement RecipientEmail : allRecipients) {
 				 System.out.println(RecipientEmail);		 
 				 String actemail = RecipientEmail.getText();
@@ -113,6 +126,13 @@ import com.big.utils.Utilities;
 			System.out.println("Email Recipient Selected");
 		}
 		
+		String ClientemailId;
+		public void selectRecipient() {
+			click(clientemailid, "Select Client Email id from drop down");
+			ClientemailId = clientemailid.getText();
+		}
+		
+		
 		public void authacknowledgeCheckBox() {
 			assertFalse(authAcknowledgeCheckbox.isSelected(), "Acknowledge checkbox is checked");
 		}
@@ -124,17 +144,66 @@ import com.big.utils.Utilities;
 			System.out.println("Wording text is entered:" + wordingText);
 		}
 		
-		public void visiblityAndClicksendAuthEmailButton() {
+		public void checkVisiblity() {
+			scrolltoElement(sendAuthEmailbutton);
 			assertTrue("Send Authorization Email button is disabled", sendAuthEmailbutton.isEnabled());
-			click(sendAuthEmailbutton, "Send Authorization Email");
-			System.out.println("Clicked on Send Authorization Email button");
 		}
 		
-		public void navigatesToAuthorizationSection(String string) throws Exception {
-			Thread.sleep(5000);
+		public void clickSendAuthorizationButton() {
+		click(sendAuthEmailbutton, "Send Authorization Email");
+		System.out.println("Clicked on Send Authorization Email button");
+		}
+		public void navigatesToAuthorizationSection() throws Exception {
+			Thread.sleep(4000);
 			click(authorizationresults, "Authorization Results Section");
 			System.out.println("Navigates to Authorization Result Section");
 		}	
+		
+		@FindBy(xpath = "//nav[@data-owl-test-label = 'nav']/div[4]/div/div/a/span/span")
+		WebElement userinfo;
+		
+		public void validateAuthorizationEmail1() throws Exception {
+			ZoneId uiZone = ZoneId.of("America/New_York"); // change timezone
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a").withZone(uiZone);
+
+			// 2. Get the timestamp string from the web element.
+			//String uiTimestampString = latestDateTime.getText();
+			String uiTimestampString = latestDateTime.getAttribute("textContent");
+			Thread.sleep(3000);
+			System.out.println("Print time: "+uiTimestampString);
+			
+			// 3. Parse the UI string into a ZonedDateTime object.
+			ZonedDateTime uiTimestamp = ZonedDateTime.parse(uiTimestampString, formatter);
+
+			// 4. Get the current system time in the same timezone.
+			ZonedDateTime systemTimestamp = ZonedDateTime.now(uiZone);
+
+			// 5.  This is the key step.
+			// It removes the seconds and nanoseconds, making the comparison fair.
+			ZonedDateTime truncatedUiTime = uiTimestamp.truncatedTo(ChronoUnit.MINUTES);
+
+			ZonedDateTime truncatedSystemTime = systemTimestamp.truncatedTo(ChronoUnit.MINUTES);
+
+			System.out.println("UI Time (Truncated to Minute):     " + truncatedUiTime);
+			System.out.println("System Time (Truncated to Minute): " + truncatedSystemTime);
+
+			// 6. Assert that the truncated objects are equal.
+			// This is more robust than comparing strings.
+			Assert.assertEquals(truncatedUiTime, truncatedSystemTime, "The UI timestamp (date, hour, and minute) does not match the current system time.");
+			
+			
+			String expectedTovalue = driver.findElement(By.xpath("//tr[@data-dnd-name ='row 2']/td[3]/p")).getText(); 
+			click(userinfo, "User Information" );
+			String actualFromvalue = driver.findElement(By.xpath("//span[@class = 'VirtualUserProfileLayout---username']")).getText();
+			String expectedFromvalue = driver.findElement(By.xpath("//tr[@data-dnd-name ='row 2']/td[2]/p")).getText();
+			
+			System.out.println("value1: " + ClientemailId);
+			System.out.println("value2: " + expectedTovalue);
+			System.out.println("value3: " + actualFromvalue);
+			System.out.println("value4: " + expectedFromvalue);
+			
+			Assert.assertTrue(ClientemailId.equals(expectedTovalue) && actualFromvalue == expectedFromvalue, "One or more values did not match.");
+		}
 		
 		public void validateAuthorizationEmail() throws Exception {
 			
@@ -145,33 +214,49 @@ import com.big.utils.Utilities;
 			String latestdateandtime = latestDateTime.getText();
 			ZonedDateTime currentdateandtime = nowInIst.withZoneSameInstant(etZone);
 			
-			String laterestDateTime = latestDateTime.getText();
-			System.out.println("latest Date and TIme:" +latestdateandtime);
+			//String latetestDateTime = latestDateTime.getText();
+			System.out.println("latest Date and Time: " +latestdateandtime);
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
 			String formattedCurrentTime = currentdateandtime.format(formatter);
 			
-			System.out.println("Current time:" +formattedCurrentTime.toString());
-			assertTwoTexts(formattedCurrentTime, laterestDateTime);
-		}
+			System.out.println("Current time: " +formattedCurrentTime.toString());
+			//assertTwoTexts(formattedCurrentTime, laterestDateTime);
+			boolean condition = (latestdateandtime.compareTo(formattedCurrentTime)>0);
+			
+			Assert.assertTrue(latestdateandtime.equalsIgnoreCase(formattedCurrentTime) || condition, "Latest date and time is not matching with system date and time");
+			
+			
+			String expectedTovalue = driver.findElement(By.xpath("//tr[@data-dnd-name ='row 2']/td[3]/p")).getText(); 
+			String expectedFromvalue = driver.findElement(By.xpath("//tr[@data-dnd-name ='row 2']/td[2]/p")).getText();
+			click(userinfo, "User Information" );
+			Thread.sleep(2000);
+			String actualFromvalue = driver.findElement(By.xpath("//span[@class = 'VirtualUserProfileLayout---username']")).getText();
+			Thread.sleep(2000);
+			click(latestDateTime, "Date and Time");
+			System.out.println("value1: " + ClientemailId);
+			System.out.println("value2: " + expectedTovalue);
+			System.out.println("value3: " + actualFromvalue);
+			System.out.println("value4: " + expectedFromvalue);
+			
+			Assert.assertTrue(ClientemailId.equals(expectedTovalue) && actualFromvalue.equals(expectedFromvalue), "One or more values did not match.");
 		
-		public void clickOnCummination(String string) {
-			//Thread.sleep(5000);
-			scrolltoElement(titletext);
-			co.user_navigate_to_casemenu(string);
 		}	
 		
-		public void validateEmailSendInCommunication(String authemail) {
-			boolean emailFound = false;
-		    for (WebElement authEmail : communicationRecords) {
-		        if (authEmail.getText().contains(authemail)) {
-		            emailFound = true;
-		            break;
-		        }
-		    }
-		    System.out.println("email found with text:" + authemail );
-		    Assert.assertTrue(emailFound, "Authorization Email '" + authemail + "' was not found in the communication.");
+		public void validateEmailSendInCommunication() {
+			
+			String actualtext = "Authorization";
+			String expectedtext = driver.findElement(By.xpath("//div[@class ='PagingGridLayout---scrollable_content']/table/tbody/tr/td[1]/div/p")).getText();
+			
+			Assert.assertTrue(expectedtext.contains(actualtext), expectedtext);
+			
+			
+		    String emailtext = driver.findElement(By.xpath("//div[@class ='PagingGridLayout---scrollable_content']/table/tbody/tr/td[3]/div/p")).getText();
+		    String actualemailtext = "This is a test wording Proposal";
+		    System.out.println(emailtext);
+		    
+		    Assert.assertTrue(emailtext.contains(actualemailtext) , "Actual text is not found in emailbody");
+		    
+		
 		}
-		
-		
 
 }

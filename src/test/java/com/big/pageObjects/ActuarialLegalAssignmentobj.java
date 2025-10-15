@@ -2,6 +2,7 @@ package com.big.pageObjects;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -10,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,7 +24,7 @@ public class ActuarialLegalAssignmentobj extends TestReusables {
 	
 	 ScenarioContext sc = new ScenarioContext();
 	    static Utilities ut = new Utilities();
-	    public static RemoteWebDriver driver= ut.getDriver();
+	    public RemoteWebDriver driver= ut.getDriver();
 	    public ActuarialLegalAssignmentobj() 
 	    {
 	        super();
@@ -52,21 +54,33 @@ public class ActuarialLegalAssignmentobj extends TestReusables {
 	    @FindBy(xpath="//span[text()='Assigned Programs']/parent::h2/following-sibling::div/descendant::button[@class='Button---btn Button---default_direction Button---small appian-context-first-in-list appian-context-last-in-list Button---inSideBySide Button---search Button---icon_start']")
 		WebElement clickSearchBtn;
 	    
+	    @FindBy(xpath="(//td)[81]")
+		WebElement caseNumber;
+	    
+	    @FindBy(xpath="(//span[@class='SizedText---medium_plus SizedText---predefined'])[2]")
+		WebElement Actions;
+	    
 	    public void searchCaseNumberForAssignedProgram(String searchCaseID) throws InterruptedException {
+	    	
 		       enterText(searchCaseId, "TC_002",searchCaseID);
 		       click(clickSearchBtn, "buttonclick"); 
-		          	       Thread.sleep(2000);
+		          	       Thread.sleep(3000);
 		}
 	    
 	    public void openContractCaseForAssignedProgram(String Contract_ID) throws InterruptedException {
-		WebElement caseNumber = driver.findElement(By.xpath("(//td)[81]"));
-			Thread.sleep(2000);        
-	    caseNumber.click();
-			System.out.println("Print Case Number "+caseNumber.getText());
-		
+	    	    
+	         Wait<RemoteWebDriver> fluentWait = new FluentWait<>(driver)
+	                 .withTimeout(Duration.ofSeconds(30))
+	                 .pollingEvery(Duration.ofSeconds(2))
+	                 .ignoring(NoSuchElementException.class);
+	           scrolltoElement(caseNumber); 
+	           click(caseNumber, "caseNumber"); 
+	               
+	             System.out.println("Print Case Number "+caseNumber.getText());
+	    	
 		}
 	    public void selectActions(String actions) throws InterruptedException {
-	         WebElement Actions = driver.findElement(By.xpath("(//span[@class='SizedText---medium_plus SizedText---predefined'])[2]"));
+	        
 	         for (WebElement ActionsTab : actionsTabs) {                
 	                if (ActionsTab.getText().equalsIgnoreCase(actions)) {
 	                    System.out.println("ActionsTab: "+ ActionsTab.getText()); 
@@ -82,17 +96,16 @@ public class ActuarialLegalAssignmentobj extends TestReusables {
 	      enterText(actuarialUser,"TC_002", str1);
 	      Thread.sleep(2000);
 	      keybordentry("Enter");
-	      Thread.sleep(1000);
+	      Thread.sleep(2000);
 	      click(submitButton, "confirm_btn"); 
 	      }
 	    
 	    public void selectLegalAnalysis(String str2) throws InterruptedException {
 		      
 		      enterText(legalUser,"TC_002", str2);
-		      System.out.print("enter texted successfuly");
 		      Thread.sleep(2000);
 		      keybordentry("Enter");
-		      Thread.sleep(1000);
+		      Thread.sleep(2000);
 		      click(submitButton, "confirm_btn"); 
 		      }
 	    public String ActuarialAnalystlabel() throws InterruptedException 

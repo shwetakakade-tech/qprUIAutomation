@@ -52,8 +52,10 @@ public class HomePage_Actions extends TestReusables {
     @FindBy(xpath="//div[@class='TabButtonGroup---tab_button_group TabButtonGroup---margin_above_none']//ul//li//a")
     List<WebElement> CaseMenuOptions;
     
-    @FindBy(xpath="//div[@class='MultiColumnLayout---column_layout MultiColumnLayout---margin_below_standard MultiColumnLayout---margin_above_none MultiColumnLayout---stack_when_phone']//p[@class='ParagraphText---richtext_paragraph ParagraphText---default_direction ParagraphText---align_start elements---global_p']")
+    @FindBy(xpath="//div[@class='MultiColumnLayout---column_layout MultiColumnLayout---margin_below_standard MultiColumnLayout---margin_above_none MultiColumnLayout---stack_when_phone'][1]/div/div/div/div")
     List<WebElement> ParagraphTabs;
+  //div[@class='MultiColumnLayout---column_layout MultiColumnLayout---margin_below_standard MultiColumnLayout---margin_above_none MultiColumnLayout---stack_when_phone'][1]/div/div/div/div
+
     
 	public void searchCaseNumber(String searchCaseID) {
 
@@ -62,8 +64,6 @@ public class HomePage_Actions extends TestReusables {
 	//	click(searchButtonForCaseNumber, searchCaseID); 
 		System.out.println("Search Case Number");
 	}
-
-
 
 
 

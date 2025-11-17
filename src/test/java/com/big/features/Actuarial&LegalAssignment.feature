@@ -10,21 +10,18 @@ Background:
 #  precondition for this scenario is for the selected case id program filling preparation is completed  
   
 @actuarialassignment
- Scenario Outline: User should be able to do Actuarial Assignment
+ Scenario Outline: User should able to perform action as "<Actions>"
        When  User opens a contract case from the Assigned Programs "<testCaseID>"
        And   User navigate to "<CaseMenu>" CaseMenu tab
        When  User navigate to "Upfront Analysis" paragraphtab 
        When  User selects the action section from "<ActionTab>"
-       And   User selects from Assign Program - Actuarial and Legal Analysis popup "<testCaseID>"
-       Then  Actuarial and Legal labels should display assigned values "<testCaseID>"
+       And   User selects from Assign Program - "<Actions>" popup "<testCaseID>"
+       Then  "<Actions>" labels should display assigned values "<testCaseID>"
+       
 Examples:
- |CaseMenu|    ActionTab        | testCaseID|
- |Summary |Actuarial Assignment |  TC_002  |
- 
-
-
-
-
+ |CaseMenu|    ActionTab        |  Actions            |testCaseID|
+ |Summary |Actuarial Assignment | Actuarial Analysis  | TC_003   |
+  |Summary |Legal Assignment    |    Legal Analysis   |  TC_003  |
 
 
  
